@@ -13,7 +13,7 @@ const array = data.events;
 console.log(array)
 const createCards = (array, container) => {
     container.innerHTML = ""
-    for (let data of array){
+    array.forEach(data => {
         let div = document.createElement('div');
         div.className = 'card'
         div.innerHTML = `
@@ -29,14 +29,15 @@ const createCards = (array, container) => {
       </div>
         `
         fragment.appendChild(div);
-    }
+    })
     container.appendChild(fragment);
 }
 
 createCards(data.events, $container)
 
+
 const createCategories = (array) =>{
-  let categories = array.map(category=> category.type)
+  let categories = array.map(category => category.type)
 
   categories = categories.reduce((sum, element)=>{
       if(!sum.includes(element)){
@@ -46,4 +47,34 @@ const createCategories = (array) =>{
   }, [])
   return categories 
 }
+
 let categories = createCategories(data)
+console.log(categories)
+
+const filterSearch = (array, value) => {
+  let filteredArray = array.filter(element=> element.name.toLowerCase().includes(value.toLowerCase()))
+      return filteredArray
+}
+const filterRadios = (array) => {
+let checked = document.querySelector('input[type="myCheckbox"]:checked');
+console.log(checked)
+let filteredArray = array.filter(element => element.type.toLowerCase().includes(checked.id.toLowerCase()))
+return filteredArray
+}
+
+const filterAndPrint =  (array) =>{
+let arrayFiltered = filterSearch(array, $search.value)
+arrayFiltered = filterRadios(arrayFiltered)
+return arrayFiltered
+}
+
+$search.addEventListener('keyup', (e) =>{
+let dataFilter = filterAndPrint(data)
+createCards(dataFilter, $container)
+})
+
+$radios.addEventListener('change', ()=>{
+let dataFilter = filterAndPrint(data)
+createCards(dataFilter, $container)
+}) 
+
