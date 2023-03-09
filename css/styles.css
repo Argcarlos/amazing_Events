@@ -192,14 +192,14 @@ input[placeholder="search"]{
     background-color: #F23D5E;
     display: flex;
     justify-content: center;
-    width: 20rem;
+    width: 100%;
     height: auto;
     align-items: center;
   }
 
-.cardDetail>image {
-  width: 25vw;
-  height: 25vh;
+#cardDetail>image {
+  width: 100%;
+  height: 20vh;
   padding: 10px;
   border-radius: 20px 20px;
   justify-content: center;
@@ -243,6 +243,17 @@ input[placeholder="search"]{
 }
 .circulo{
   border-radius: 100%;
+}*/
+
+#myInput {
+  background-image: url('../assets/img/search-40.png');
+  background-position: 2px 2px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
 }
 
 /* Table */

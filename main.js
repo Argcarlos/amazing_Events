@@ -5,7 +5,7 @@ console.log([document])
 //elements
 const $container = document.getElementById('container');
 const fragment = document.createDocumentFragment();
-const $Checkbox = document.getElementById('checkbox');
+const $checkbox = document.getElementById('checkbox');
 const $search = document.querySelector('input[placeholder="search"]');
 let $cardTemplate = document.querySelector("#cardTemplate")
 
@@ -35,7 +35,6 @@ const createCards = (array, container) => {
 
 createCards(data.events, $container)
 
-
 const createCategories = (array) =>{
   let categories = array.map(category => category.type)
 
@@ -55,7 +54,7 @@ const filterSearch = (array, value) => {
   let filteredArray = array.filter(element=> element.name.toLowerCase().includes(value.toLowerCase()))
       return filteredArray
 }
-const filterRadios = (array) => {
+const filterCheckbox = (array) => {
 let checked = document.querySelector('input[type="myCheckbox"]:checked');
 console.log(checked)
 let filteredArray = array.filter(element => element.type.toLowerCase().includes(checked.id.toLowerCase()))
@@ -64,7 +63,7 @@ return filteredArray
 
 const filterAndPrint =  (array) =>{
 let arrayFiltered = filterSearch(array, $search.value)
-arrayFiltered = filterRadios(arrayFiltered)
+arrayFiltered = filterCheckbox(arrayFiltered)
 return arrayFiltered
 }
 
@@ -73,8 +72,9 @@ let dataFilter = filterAndPrint(data)
 createCards(dataFilter, $container)
 })
 
-$radios.addEventListener('change', ()=>{
+$checkbox.addEventListener('change', ()=>{
 let dataFilter = filterAndPrint(data)
 createCards(dataFilter, $container)
 }) 
+
 
