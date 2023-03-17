@@ -1,5 +1,17 @@
 import data from "./data.js"
-console.log([document])
+console.log(data)
+
+const nav = document.querySelector('.nav')
+window.addEventListener('scroll', fixNav)
+
+function fixNav() {
+    if(window.scrollY > nav.offsetHeight + 150) {
+        nav.classList.add('active')
+    } else {
+        nav.classList.remove('active')
+    }
+}
+// DOM Manipulation
 
 
 //elements
@@ -77,4 +89,55 @@ let dataFilter = filterAndPrint(data)
 createCards(dataFilter, $container)
 }) 
 
+// Code json
 
+const result = document.getElementById('result')
+const filter = document.getElementById('filter')
+const listItems = []
+
+getData()
+
+filter.addEventListener('input', (e) => filterData(e.target.value))
+
+async function getData() {
+    const res = await fetch('../data/amazing.json')
+    
+    console.log(res);
+    data = await json.res;
+    console.log(data);
+    const { results } = await res.json()
+
+    // Clear result
+    result.innerHTML = ''
+
+    results.forEach(card => {
+        const li = document.createElement('li')
+
+        listItems.push(li)
+
+        li.innerHTML = `
+        <img src="${data.image}" class="card-img-top" id="" alt="">
+        <div class="card-body">
+          <h5 class="card-title">${data.name}</h5>
+          <p class="card-text">${data.description}</p>
+          <p>Date: ${data.date}</p>
+          <p>U$s ${data.price}</p>
+          <a href="./details.html?id=${data._id}" class="btn btn-primary align-self-end justify-self-end">Details</a>
+         
+        </div>
+      </div>
+        `
+
+        result.appendChild(li)
+    })
+}
+
+function filterData(searchTerm) {
+    listItems.forEach(item => {
+        if(item.innerText.toLowerCase().includes(searchTerm.toLowerCase())) {
+            item.classList.remove('hide')
+        } else {
+            item.classList.add('hide')
+        }
+    })
+}

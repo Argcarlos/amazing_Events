@@ -13,26 +13,42 @@
 </head>
 
 <body>
-  <header>
-    <img src="../assets/img/Logo_Amazing_Events.png" alt="" width="350" height="150" class="d-inline-block align-text-top">
-    <!--navbar  -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-            <a class="nav-link" href="./upcomingEvents.html">Upcoming Events</a>
-            <a class="nav-link" href="./pastEvents.html">Past Events</a>
-            <a class="nav-link" href="./contact.html">Contact</a>
-            <a class="nav-link" href="./stats.html">Stats</a> 
-          </div>
-        </div>
-      </div>
-    </nav>
-  </header>
+  <nav class="nav">
+    <div class="container">
+      <img class="logo-img" src="./assets/img/Logo_Amazing_Events.png" alt="">
+      <h1 class="logo"><a href="/index.html">Amazing Events</a></h1>
+      <ul>
+        <li><a href="#" class="current">Home</a></li>
+        <li><a href="./upcomingEvents.html">Upcoming</a></li>
+        <li><a href="./pastEvents.html">Past Events</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+        <li><a href="./stats.html">Stats</a></li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="container">
+      <h1>Welcome To Amazing Events</h1>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores, consequuntur?</p>
+    </div>
+  </div>
+  <section class="container content">
+    
+    <div class="header">
+      <h4 class="title">Live User Filter</h4>
+      <small class="subtitle">Search by name and/or location</small>
+      <input type="text" id="filter" placeholder="Search">
+    </div>
+
+    <ul id="result" class="card-list">
+      <li>
+        <h3>Loading...</h3>
+      </li>
+    </ul>
+ 
+</section>
   <main>
     <div class="home">
       <h1>HOME</h1>
@@ -44,7 +60,7 @@
         <div class="form-check form-check-inline" id="checkbox">
           <input type="checkbox" id="myCheckbox"> Cinema
           <input type="checkbox" id="myCheckbox"> Concert
-          <input type="checkbox" id="myCheckbox"> Foods
+          <input type="checkbox" id="myCheckbox"> Food Fair
           <input type="checkbox" id="myCheckbox"> Marathon
           <input type="checkbox" id="myCheckbox"> Museum
           <input type="checkbox" id="myCheckbox"> Costumes Parties
@@ -68,24 +84,35 @@
   </main>
 
   <!--==================== FOOTER ====================-->
-  <footer>
-    <div class="footer__container">
-      <div class="social">
-        <a href="https://instagram.com">
-          <img src="./assets/img/square-instagram.svg" alt="" width="30" height="30">
-        </a>
-        <a href="https://facebook.com">
-          <img src="./assets/img/square-facebook.svg" alt="" width="30" height="30">
-        </a>
-        <a href="https://https://web.whatsapp.com">
-          <img src="./assets/img/square-whatsapp.svg" alt="" width="30" height="30">
-        </a>
-      </div>
-      <p class="footer__copy">&#169; 2023 Amazing Events. All rigths reserved.</p>
-      <div class="footer__powered">
-        <a href="#" class="footer__powered-link">Powered by CaQ</a>
-      </div>
+  <footer class="main-footer">
+    <div class="footer-section">
+      <h2 class="footer-title ">About Us</h2>
+      <a href="https://instagram.com">
+        <img class="social" src="./assets/img/square-instagram.svg" alt="">
+      </a>
+      <a href="https://facebook.com">
+        <img class="social" src="./assets/img/square-facebook.svg" alt="">
+      </a>
+      <a href="https://https://web.whatsapp.com">
+        <img class="social" src="./assets/img/square-whatsapp.svg" alt="">
+      </a>
     </div>
+    <div class="footer-section">
+      <h2 class="footer-title ">Quick Links</h2>
+      <a href="#" class="footer-link">Home</a>
+      <a href="./upcomingEvents.html" class="footer-link">Upcoming</a>
+      <a href="./pastEvents.html" class="footer-link">Past Events</a>
+      <a href="./contact.html" class="footer-link">Contact</a>
+      <a href="./stats.html" class="footer-link">Stats</a>
+    </div>
+    <div class="footer-section">
+      <a href="http://">Powered by CaQ</a>
+    </div>
+    <div class="footer-section-b">
+      <h2 class="footer-title ">© 2023 Amazing Events. All Rights Reserved.</h2>
+      <p class="footer-txt"></p>
+    </div>
+
   </footer>
 
   
