@@ -1,143 +1,111 @@
-import data from "./data.js"
-console.log(data)
+import {
+  createCards,
+  createDetails,
+  createCategories,
+  createRadios,
+  filterRadios,
+  filterSearch,
+} from "./helpers.js";
 
-const nav = document.querySelector('.nav')
-window.addEventListener('scroll', fixNav)
+//import data from "./data.js"
+
+const nav = document.querySelector(".nav");
+window.addEventListener("scroll", fixNav);
 
 function fixNav() {
-    if(window.scrollY > nav.offsetHeight + 150) {
-        nav.classList.add('active')
-    } else {
-        nav.classList.remove('active')
-    }
+  if (window.scrollY > nav.offsetHeight + 150) {
+    nav.classList.add("active");
+  } else {
+    nav.classList.remove("active");
+  }
 }
 // DOM Manipulation
 
-
-//elements
-const $container = document.getElementById('container');
-const fragment = document.createDocumentFragment();
-const $checkbox = document.getElementById('checkbox');
+// Elementos del DOM
+const $container = document.getElementById("container");
+const $radios = document.getElementById("radios");
 const $search = document.querySelector('input[placeholder="search"]');
-let $cardTemplate = document.querySelector("#cardTemplate")
+const $reset = document.getElementById("reset");
+const $spinner = document.getElementById("spinner");
 
-const array = data.events;
-console.log(array)
-const createCards = (array, container) => {
-    container.innerHTML = ""
-    array.forEach(data => {
-        let div = document.createElement('div');
-        div.className = 'card'
-        div.innerHTML = `
-        <img src="${data.image}" class="card-img-top" id="" alt="">
-        <div class="card-body">
-          <h5 class="card-title">${data.name}</h5>
-          <p class="card-text">${data.description}</p>
-          <p>Date: ${data.date}</p>
-          <p>U$s ${data.price}</p>
-          <a href="./details.html?id=${data._id}" class="btn btn-primary align-self-end justify-self-end">Details</a>
-         
-        </div>
-      </div>
-        `
-        fragment.appendChild(div);
-    })
-    container.appendChild(fragment);
-}
+// Variables globales
+let data = [];
+let categories = "";
 
-createCards(data.events, $container)
+// Función para mostrar el spinner
+const showSpinner = () => {
+  $spinner.classList.add("spinner--active");
+};
 
-const createCategories = (array) =>{
-  let categories = array.map(category => category.type)
+// Función para ocultar el spinner
+const hideSpinner = () => {
+  $spinner.classList.remove("spinner--active");
+};
 
-  categories = categories.reduce((sum, element)=>{
-      if(!sum.includes(element)){
-          sum.push(element);
-      }
-      return sum
-  }, [])
-  return categories 
-}
-
-let categories = createCategories(data)
-console.log(categories)
-
-const filterSearch = (array, value) => {
-  let filteredArray = array.filter(element=> element.name.toLowerCase().includes(value.toLowerCase()))
-      return filteredArray
-}
-const filterCheckbox = (array) => {
-let checked = document.querySelector('input[type="myCheckbox"]:checked');
-console.log(checked)
-let filteredArray = array.filter(element => element.type.toLowerCase().includes(checked.id.toLowerCase()))
-return filteredArray
-}
-
-const filterAndPrint =  (array) =>{
-let arrayFiltered = filterSearch(array, $search.value)
-arrayFiltered = filterCheckbox(arrayFiltered)
-return arrayFiltered
-}
-
-$search.addEventListener('keyup', (e) =>{
-let dataFilter = filterAndPrint(data)
-createCards(dataFilter, $container)
-})
-
-$checkbox.addEventListener('change', ()=>{
-let dataFilter = filterAndPrint(data)
-createCards(dataFilter, $container)
-}) 
-
-// Code json
-
-const result = document.getElementById('result')
-const filter = document.getElementById('filter')
-const listItems = []
-
-getData()
-
-filter.addEventListener('input', (e) => filterData(e.target.value))
-
+// Función para obtener los datos de la API
 async function getData() {
-    const res = await fetch('../data/amazing.json')
-    
-    console.log(res);
-    data = await json.res;
-    console.log(data);
-    const { results } = await res.json()
+  try {
+    const api = "./amazing.json";
+    await fetch(api)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        createCards(data.events, $container); // Imprimo las cards
 
-    // Clear result
-    result.innerHTML = ''
+        let detailContainer = document.querySelector("#cardDetail");
+        const array = data.events;
+        const queryString = location.search;
+        const params = new URLSearchParams(queryString);
+        const dataId = params.get("id");
 
-    results.forEach(card => {
-        const li = document.createElement('li')
+        const selectedCard = array.find((card) => card.id == dataId);
 
-        listItems.push(li)
+        createDetails(selectedCard, detailContainer);
 
-        li.innerHTML = `
-        <img src="${data.image}" class="card-img-top" id="" alt="">
-        <div class="card-body">
-          <h5 class="card-title">${data.name}</h5>
-          <p class="card-text">${data.description}</p>
-          <p>Date: ${data.date}</p>
-          <p>U$s ${data.price}</p>
-          <a href="./details.html?id=${data._id}" class="btn btn-primary align-self-end justify-self-end">Details</a>
-         
-        </div>
-      </div>
-        `
+        categories = createCategories(data); // Creo las categorías
+        createRadios(categories, $radios); // Imprimo los radios de categorías
+      });
 
-        result.appendChild(li)
-    })
+    hideSpinner(); // Escondo el spinner antes de imprimir las cards
+
+    categories = createCategories(data); // Creo las categorías
+    createRadios(categories, $radios); // Imprimo los radios de categorías
+  } catch (error) {
+    console.log(error);
+  }
 }
+//Llamo a la función para activar spinner
+showSpinner();
+// Llamo a la función para obtener los datos de la API
+getData();
 
-function filterData(searchTerm) {
-    listItems.forEach(item => {
-        if(item.innerText.toLowerCase().includes(searchTerm.toLowerCase())) {
-            item.classList.remove('hide')
-        } else {
-            item.classList.add('hide')
-        }
-    })
-}
+// Función para filtrar y mostrar las cards
+const filterAndPrint = () => {
+  let dataFiltered = filterSearch(data, $search.value);
+  dataFiltered = filterRadios(dataFiltered);
+  if (dataFiltered.length === 0) {
+    const $noResults = document.getElementById("no-results");
+    $noResults.style.display = "block";
+  } else {
+    const $noResults = document.getElementById("no-results");
+    $noResults.style.display = "none";
+  }
+  createCards(dataFiltered, $container);
+};
+
+// Eventos de los elementos del DOM
+$radios.addEventListener("change", () => {
+  filterAndPrint();
+});
+
+$search.addEventListener("keyup", () => {
+  filterAndPrint();
+});
+
+$reset.addEventListener("click", () => {
+  // Deselecciono todos los radios de categorías
+  document.querySelectorAll('input[type="radio"]:checked').forEach((radio) => {
+    radio.checked = false;
+  });
+  filterAndPrint();
+});

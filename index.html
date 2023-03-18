@@ -23,7 +23,6 @@
         <li><a href="./pastEvents.html">Past Events</a></li>
         <li><a href="./contact.html">Contact</a></li>
         <li><a href="./stats.html">Stats</a></li>
-
       </ul>
     </div>
   </nav>
@@ -34,28 +33,24 @@
       <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores, consequuntur?</p>
     </div>
   </div>
-  <section class="container content">
-    
-    <div class="header">
-      <h4 class="title">Live User Filter</h4>
-      <small class="subtitle">Search by name and/or location</small>
-      <input type="text" id="filter" placeholder="Search">
-    </div>
 
-    <ul id="result" class="card-list">
-      <li>
-        <h3>Loading...</h3>
-      </li>
-    </ul>
- 
-</section>
+
   <main>
-    <div class="home">
-      <h1>HOME</h1>
+    <input type="text" placeholder="search">
+    <div id="radios"></div>
+    <input id="reset" type="button" value="reset radio">
+    <h1 id="no-results" style="display: none;">No hubieron resultados</h1>
+    <div id="spinner" class="spinner">
+        <div class="spinner__item"></div>
+        <div class="spinner__item"></div>
+        <div class="spinner__item"></div>
+      </div>
+      
+    <div id="container">
+    
     </div>
-
-    <!--Search  -->
-    <div class="container-search">
+     <!--Search  -->
+     <div class="container-search">
       <div class="container-check">
         <div class="form-check form-check-inline" id="checkbox">
           <input type="checkbox" id="myCheckbox"> Cinema
@@ -72,14 +67,9 @@
       </div>
     </div>
 
-      <div id="checkbox">
+  
+    
 
-      </div>
-      <div id="container">
-        <div id="cardTemplate">
-
-        </div>
-      </div>
   
   </main>
 

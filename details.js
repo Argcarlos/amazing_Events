@@ -1,4 +1,5 @@
-import data from "./data.js"
+/*import { createCards } from './helpers.js';
+//import data from "./data.js"
 
 let detailContainer = document.querySelector("#cardDetail");
 const array = data.events
@@ -8,6 +9,11 @@ const dataId = params.get('id');
 
 const selectedCard = array.find(card => card._id == dataId);
 console.log(selectedCard)
+
+// Variables globales
+let data = [];
+let categories = "";
+
 
 function createDetails(selectedCard, detailContainer) {
     let div = document.createElement('div');
@@ -28,4 +34,4 @@ function createDetails(selectedCard, detailContainer) {
 
 createDetails(selectedCard, detailContainer);
 
-
+*/
