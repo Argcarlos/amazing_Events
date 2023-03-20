@@ -29,7 +29,7 @@ export  const createDetails= (card, detailContainer) => {
   div.classList = 'card-big d-flex bg-light gap-2 rounded p-3';
   div.style = 'width: 90%; height: 90%;';
   div.innerHTML = ` 
-      <div class="card2">
+      <div class="card-body">
           <img src="${card.image}" class="card-img-top" alt="">
           <div class="card-body2">
               <h5 class="card-title">${card.name}</h5>
