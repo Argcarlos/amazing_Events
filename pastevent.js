@@ -12,14 +12,10 @@ async function getData() {
       .then((data) => {
         console.log(data);
 
-        const dateUp = Date(data.date);
-        const dateToday = Date(data.currentDate);
-        
-        if(dateUp == dateToday) {
-          createCards(data.events, $container); // Imprimo las cards
-        } else {
-          
-        }
+        const currentDate = new Date();
+        const events = data.events.filter(event => new Date(event.date) <= currentDate);
+
+        createCards(events, $container); // Imprimo las cards
         
 
       });
