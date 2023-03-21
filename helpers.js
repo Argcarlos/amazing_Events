@@ -43,7 +43,7 @@ export  const createDetails= (card, detailContainer) => {
   detailContainer.appendChild(fragment);
 }
 
-
+//Table
 function createTable(data, table) {
   // Create table header
   const header = table.createTHead();
@@ -74,19 +74,23 @@ function createTable(data, table) {
   }
   
   // Create rows for upcoming event statistics
-  const upcomingEvents = data.upcomingEvents;
+  const upcomingEvents = data.events;
+  console.log(upcomingEvents); 
   for (let i = 0; i < upcomingEvents.length; i++) {
     const row = body.insertRow();
     const categoryCell = row.insertCell();
     const revenueCell = row.insertCell();
     const attendanceCell = row.insertCell();
     categoryCell.textContent = upcomingEvents[i].category;
+    console.log(categoryCell)
     revenueCell.textContent = upcomingEvents[i].revenues;
+    console.log(revenueCell)
     attendanceCell.textContent = upcomingEvents[i].attendancePercentage;
+    console.log(attendanceCell)
   }
   
   // Create rows for past event statistics
-  const pastEvents = data.pastEvents;
+  const pastEvents = data.events;
   for (let i = 0; i < pastEvents.length; i++) {
     const row = body.insertRow();
     const categoryCell = row.insertCell();
@@ -98,33 +102,31 @@ function createTable(data, table) {
   }
 }
 
-
-
 export {createTable};
 
 
-
-
-
-
   export const createCategories = (array) => {
+    if (!Array.isArray(array)) {
+      return [];
+    }
+    array = data.events;
     let categories = array.map(category => category.type)
 
-    categories = categories.reduce((acumulador, elemento) => {
-        if (!acumulador.includes(elemento)) {
-            acumulador.push(elemento);
+    categories = categories.reduce((sum, element) => {
+        if (!sum.includes(element)) {
+            sum.push(element);
         }
-        return acumulador
+        return sum
     }, [])
     return categories
 }
   
-  export const createRadios = (array, container) => {
+  export const createCheckbox = (array, container) => {
     array.forEach(category => {
         let div = document.createElement('div')
-        div.className = `radios-container ${category.toLowerCase()}`
+        div.className = `checkbox-container ${category.toLowerCase()}`
         div.innerHTML = `
-        <input type="radio" id="${category.toLowerCase()}" name="category" value="${category.toLowerCase()}" />
+        <input type="checkbox" id="${category.toLowerCase()}" name="category" value="${category.toLowerCase()}" />
         <label for="${category.toLowerCase()}">${category}</label>
         `
         container.appendChild(div)
@@ -133,13 +135,16 @@ export {createTable};
   
   export const filterSearch = (array, value) => {
     let filteredArray = array.filter(element => element.name.toLowerCase().includes(value.toLowerCase()))
+    console.log(filteredArray)
     return filteredArray
 }
   
-  export const filterRadios = (array) => {
-    let checked = document.querySelector('input[type="radio"]:checked');
+  export const filterCheck = (array) => {
+    let checked = document.querySelector('input[type="checkbox"]:checked');
+    console.log(checked)
     if (checked) {
       let filteredArray = array.filter(element => element.type.toLowerCase().includes(checked.value.toLowerCase()))
+      console.log(filteredArray)
       return filteredArray
     } else {
       return array;

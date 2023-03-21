@@ -1,6 +1,6 @@
 
 
-import { createCards, createTable } from "./helpers.js";
+import { createTable } from "./helpers.js";
 
 const $container = document.getElementById("container");
 

@@ -1,8 +1,8 @@
 import {
   createCards,
   createCategories,
-  createRadios,
-  filterRadios,
+  createCheckbox,
+  filterCheck,
   filterSearch,
 } from "./helpers.js";
 
@@ -19,28 +19,29 @@ function fixNav() {
 }
 // DOM Manipulation
 
-// Elementos del DOM
+// Element del DOM
 const $container = document.getElementById("container");
-const $radios = document.getElementById("radios");
+const $checkbox = document.getElementById("container-check")
 const $search = document.querySelector('input[placeholder="search"]');
 const $reset = document.getElementById("reset");
 const $spinner = document.getElementById("spinner");
+//const $search = document.getElementById('search-input');
 
-// Variables globales
+// Variables global
 let data = [];
 let categories = "";
 
-// Función para mostrar el spinner
+// Function to show the spinner
 const showSpinner = () => {
   $spinner.classList.add("spinner--active");
 };
 
-// Función para ocultar el spinner
+// Function to hide the spinner
 const hideSpinner = () => {
   $spinner.classList.remove("spinner--active");
 };
 
-// Función para obtener los datos de la API
+// Function to get  data from API
 async function getData() {
   try {
     const api = "./amazing.json";
@@ -48,18 +49,20 @@ async function getData() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        createCards(data.events, $container); // Imprimo las cards
+        hideSpinner(); // Hide the spinner before to print the cards
+        createCards(data.events, $container); // print cards
 
-        categories = createCategories(data); // Creo las categorías
-        createRadios(categories, $radios); // Imprimo los radios de categorías
+        categories = createCategories(data); // Create the categories
+        console.log(categories)
+        createCheckbox(categories, $checkbox); // Print los checkboxes de categorías
+        // Store the data in a variable accessible to the filterAndPrint function
+        window.data = data.events;
+       
       });
-
-    hideSpinner(); // Escondo el spinner antes de imprimir las cards
-
-    categories = createCategories(data); // Creo las categorías
-    createRadios(categories, $radios); // Imprimo los radios de categorías
+ 
   } catch (error) {
     console.log(error);
+   
   }
 }
 //Llamo a la función para activar spinner
@@ -67,10 +70,12 @@ showSpinner();
 // Llamo a la función para obtener los datos de la API
 getData();
 
+
+
 // Función para filtrar y mostrar las cards
 const filterAndPrint = () => {
-  let dataFiltered = filterSearch(data, $search.value);
-  dataFiltered = filterRadios(dataFiltered);
+  let dataFiltered = filterSearch(data.events, e.target.value);
+  dataFiltered = filterCheckbox(dataFiltered);
   if (dataFiltered.length === 0) {
     const $noResults = document.getElementById("no-results");
     $noResults.style.display = "block";
@@ -81,8 +86,9 @@ const filterAndPrint = () => {
   createCards(dataFiltered, $container);
 };
 
+
 // Eventos de los elementos del DOM
-$radios.addEventListener("change", () => {
+$checkbox.addEventListener("change", () => {
   filterAndPrint();
 });
 
@@ -92,8 +98,8 @@ $search.addEventListener("keyup", () => {
 
 $reset.addEventListener("click", () => {
   // Deselecciono todos los radios de categorías
-  document.querySelectorAll('input[type="radio"]:checked').forEach((radio) => {
-    radio.checked = false;
+  document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
+    checkbox.checked = false;
   });
   filterAndPrint();
 });
