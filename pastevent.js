@@ -1,31 +1,35 @@
-import data from "./data.js"
-console.log([document])
+import { createCards } from "./helpers.js";
 
-/*let cardTemplate= document.getElementById("cardTemplate");*/
-const fragment = document.createDocumentFragment();
-let cardTemplate = document.querySelector("#cardTemplate")
+const $container = document.getElementById("container");
 
-const myArray = Object.values(data);
 
-  function createCards(Array, cardTemplate){
-    for(let data of Array){
-        let div = document.createElement("div");
-        div.className = "card"
-        div.innerHTML += `
-       
-        <img src="${data.image}" class="card-img-top" id="" alt="">
-        <div class="card-body">
-          <h5 class="card-title">${data.name}</h5>
-          <p class="card-text">${data.description}</p>
-          <p>Date: ${data.date}</p>
-          <p>U$s ${data.price}</p>
-          <a href="./pages/details.html?id=${data.id}" class="btn btn-primary align-self-end justify-self-end">Details</a>
-         
-        </div>
-      </div>
-       `
-      fragment.appendChild(div);
-    }
-    cardTemplate.appendChild(fragment);
+// Función para obtener los datos de la API
+async function getData() {
+  try {
+    const api = "./amazing.json";
+    await fetch(api)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        const dateUp = Date(data.date);
+        const dateToday = Date(data.currentDate);
+        
+        if(dateUp == dateToday) {
+          createCards(data.events, $container); // Imprimo las cards
+        } else {
+          
+        }
+        
+
+      });
+
+  
+  } catch (error) {
+    console.log(error);
+  }
 }
-createCards(data.events, cardTemplate)
+
+getData();
+
+
