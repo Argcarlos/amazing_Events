@@ -1,13 +1,11 @@
 import {
   createCards,
-  createDetails,
   createCategories,
   createRadios,
   filterRadios,
   filterSearch,
 } from "./helpers.js";
 
-//import data from "./data.js"
 
 const nav = document.querySelector(".nav");
 window.addEventListener("scroll", fixNav);
@@ -51,16 +49,6 @@ async function getData() {
       .then((data) => {
         console.log(data);
         createCards(data.events, $container); // Imprimo las cards
-
-        let detailContainer = document.querySelector("#cardDetail");
-        const array = data.events;
-        const queryString = location.search;
-        const params = new URLSearchParams(queryString);
-        const dataId = params.get("id");
-
-        const selectedCard = array.find((card) => card.id == dataId);
-
-        createDetails(selectedCard, detailContainer);
 
         categories = createCategories(data); // Creo las categorías
         createRadios(categories, $radios); // Imprimo los radios de categorías

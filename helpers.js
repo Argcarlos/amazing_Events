@@ -27,11 +27,11 @@ export const createCards = (array, container) => {
 export  const createDetails= (card, detailContainer) => {
   let div = document.createElement('div');
   div.classList = 'card-big d-flex bg-light gap-2 rounded p-3';
-  div.style = 'width: 90%; height: 90%;';
+  
   div.innerHTML = ` 
-      <div class="card-body">
+      <div class="card-body2">
           <img src="${card.image}" class="card-img-top" alt="">
-          <div class="card-body2">
+          <div class="card-body3">
               <h5 class="card-title">${card.name}</h5>
               <p class="card-text"> Description: ${card.description}</p>
               <p>Date: ${card.date}</p>
