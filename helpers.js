@@ -43,6 +43,70 @@ export  const createDetails= (card, detailContainer) => {
   detailContainer.appendChild(fragment);
 }
 
+
+function createTable(data, table) {
+  // Create table header
+  const header = table.createTHead();
+  const headerRow = header.insertRow();
+  const headerCell = headerRow.insertCell();
+  headerCell.colSpan = "3";
+  headerCell.textContent = "Events statistics";
+
+  // Create table body
+  const body = table.createTBody();
+  
+  // Create rows for data
+  const rows = [
+    ["Events with the hightest percentage of attendance", "Events with the lowest percentage of attendance", "Events with larger capacity"],
+    [data.highestAttendanceEvent, data.lowestAttendanceEvent, data.largestCapacityEvent],["", "", ""],["", "", ""],
+    ["Upcoming Events statistics by category", "", ""],
+    ["Categories", "Revenues", "Percentage of attendance"],["", "", ""],["", "", ""],
+    ["Past Events statistics by category", "", ""],
+    ["Categories", "Revenues", "Percentage of attendance"],["", "", ""],["", "", ""]
+  ];
+  
+  for (let i = 0; i < rows.length; i++) {
+    const row = body.insertRow();
+    for (let j = 0; j < rows[i].length; j++) {
+      const cell = row.insertCell();
+      cell.textContent = rows[i][j];
+    }
+  }
+  
+  // Create rows for upcoming event statistics
+  const upcomingEvents = data.upcomingEvents;
+  for (let i = 0; i < upcomingEvents.length; i++) {
+    const row = body.insertRow();
+    const categoryCell = row.insertCell();
+    const revenueCell = row.insertCell();
+    const attendanceCell = row.insertCell();
+    categoryCell.textContent = upcomingEvents[i].category;
+    revenueCell.textContent = upcomingEvents[i].revenues;
+    attendanceCell.textContent = upcomingEvents[i].attendancePercentage;
+  }
+  
+  // Create rows for past event statistics
+  const pastEvents = data.pastEvents;
+  for (let i = 0; i < pastEvents.length; i++) {
+    const row = body.insertRow();
+    const categoryCell = row.insertCell();
+    const revenueCell = row.insertCell();
+    const attendanceCell = row.insertCell();
+    categoryCell.textContent = pastEvents[i].category;
+    revenueCell.textContent = pastEvents[i].revenues;
+    attendanceCell.textContent = pastEvents[i].attendancePercentage;
+  }
+}
+
+
+
+export {createTable};
+
+
+
+
+
+
   export const createCategories = (array) => {
     let categories = array.map(category => category.type)
 
