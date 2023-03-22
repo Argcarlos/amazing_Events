@@ -296,7 +296,6 @@ input[placeholder="search"]{
 }
 
 #container{
-  border: 1px solid;
   width: 100%;
   min-height: 90vh;
   display: flex;
@@ -336,17 +335,14 @@ input[placeholder="search"]{
 #container-check {
     display: flex;
     justify-content: center;
-    background-color:rgba(0, 0, 0, 0.3);
     height: 10vh;
 
 }
-.form-control {
-  display: flex;
-  justify-content: space-between;
+#search {
+  text-align: center;
   margin: 10px;
-
   width: 50%;
-  height: 50%;
+  height: 40%;
 }
 
 

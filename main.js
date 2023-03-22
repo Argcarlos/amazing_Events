@@ -3,9 +3,8 @@ import {
   createCategories,
   createCheckbox,
   filterCheck,
-  filterSearch,
+  filterSearch
 } from "./helpers.js";
-
 
 const nav = document.querySelector(".nav");
 window.addEventListener("scroll", fixNav);
@@ -21,8 +20,8 @@ function fixNav() {
 
 // Element del DOM
 const $container = document.getElementById("container");
-const $checkbox = document.getElementById("container-check")
-const $search = document.querySelector('input[placeholder="search"]');
+const $checkbox = document.getElementById("container-check");
+const $search = document.getElementById("search");
 const $reset = document.getElementById("reset");
 const $spinner = document.getElementById("spinner");
 //const $search = document.getElementById('search-input');
@@ -52,17 +51,32 @@ async function getData() {
         hideSpinner(); // Hide the spinner before to print the cards
         createCards(data.events, $container); // print cards
 
-        categories = createCategories(data); // Create the categories
-        console.log(categories)
+        categories = createCategories(data.events); // Create the categories
+        console.log(categories);
         createCheckbox(categories, $checkbox); // Print los checkboxes de categorías
         // Store the data in a variable accessible to the filterAndPrint function
-        window.data = data.events;
-       
+
+        // Eventos de los elementos del DOM
+        $checkbox.addEventListener("change", () => {
+          filterAndPrint();
+        });
+        console.log($search);
+        $search.addEventListener("keyup", () => {
+          filterAndPrint(data.events);
+        });
+
+        $reset.addEventListener("click", () => {
+          // Deselecciono todos los radios de categorías
+          document
+            .querySelectorAll('input[type="checkbox"]:checked')
+            .forEach((checkbox) => {
+              checkbox.checked = false;
+            });
+          filterAndPrint(data.events);
+        });
       });
- 
   } catch (error) {
     console.log(error);
-   
   }
 }
 //Llamo a la función para activar spinner
@@ -70,12 +84,10 @@ showSpinner();
 // Llamo a la función para obtener los datos de la API
 getData();
 
-
-
 // Función para filtrar y mostrar las cards
-const filterAndPrint = () => {
-  let dataFiltered = filterSearch(data.events, e.target.value);
-  dataFiltered = filterCheckbox(dataFiltered);
+const filterAndPrint = (array) => {
+  let dataFiltered = filterSearch(array, $search.value);
+  dataFiltered = filterCheck(dataFiltered);
   if (dataFiltered.length === 0) {
     const $noResults = document.getElementById("no-results");
     $noResults.style.display = "block";
@@ -85,21 +97,3 @@ const filterAndPrint = () => {
   }
   createCards(dataFiltered, $container);
 };
-
-
-// Eventos de los elementos del DOM
-$checkbox.addEventListener("change", () => {
-  filterAndPrint();
-});
-
-$search.addEventListener("keyup", () => {
-  filterAndPrint();
-});
-
-$reset.addEventListener("click", () => {
-  // Deselecciono todos los radios de categorías
-  document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
-    checkbox.checked = false;
-  });
-  filterAndPrint();
-});

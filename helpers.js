@@ -33,7 +33,11 @@ export  const createDetails= (card, detailContainer) => {
           <img src="${card.image}" class="card-img-top" alt="">
           <div class="card-body3">
               <h5 class="card-title">${card.name}</h5>
+              <p>Category: ${card.category}</p>
               <p class="card-text"> Description: ${card.description}</p>
+              <p>Category: ${card.category}</p>
+              <p>Place: ${card.place}</p>
+              <p>Assistance: ${card.assistance}</p>
               <p>Date: ${card.date}</p>
               <p>U$s ${card.price}</p> 
           </div>
@@ -106,11 +110,8 @@ export {createTable};
 
 
   export const createCategories = (array) => {
-    if (!Array.isArray(array)) {
-      return [];
-    }
-    array = data.events;
-    let categories = array.map(category => category.type)
+
+    let categories = array.map(category => category.category)
 
     categories = categories.reduce((sum, element) => {
         if (!sum.includes(element)) {
@@ -124,16 +125,20 @@ export {createTable};
   export const createCheckbox = (array, container) => {
     array.forEach(category => {
         let div = document.createElement('div')
-        div.className = `checkbox-container ${category.toLowerCase()}`
+        div.classList = `container-check ${category.toLowerCase()}`
         div.innerHTML = `
         <input type="checkbox" id="${category.toLowerCase()}" name="category" value="${category.toLowerCase()}" />
         <label for="${category.toLowerCase()}">${category}</label>
         `
+        console.log(div)
+    
+
         container.appendChild(div)
     })
 }
   
   export const filterSearch = (array, value) => {
+    console.log(array, value)
     let filteredArray = array.filter(element => element.name.toLowerCase().includes(value.toLowerCase()))
     console.log(filteredArray)
     return filteredArray
